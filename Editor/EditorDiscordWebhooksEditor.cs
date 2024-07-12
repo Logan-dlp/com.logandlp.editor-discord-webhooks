@@ -120,7 +120,7 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             if (path == null)
             {
                 AssetDatabase.CreateAsset(CreateInstance<EditorDiscordWebhooksConfig>(), 
-                    $"Packages/com.logandlp.editor-discord-webhooks/Runtime/{nameof(EditorDiscordWebhooksConfig)}.asset");
+                    $"Assets/{nameof(EditorDiscordWebhooksConfig)}.asset");
                 continue;
             }
 
