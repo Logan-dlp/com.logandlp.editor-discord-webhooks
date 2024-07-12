@@ -1,3 +1,5 @@
+// Copyright 2024, Logan, All rights reserved.
+
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

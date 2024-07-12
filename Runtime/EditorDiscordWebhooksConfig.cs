@@ -1,4 +1,5 @@
-using Unity.Collections;
+// Copyright 2024, Logan, All rights reserved.
+
 using UnityEngine;
 
 public class EditorDiscordWebhooksConfig : ScriptableObject
