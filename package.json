@@ -1,0 +1,15 @@
+{
+  "name": "com.logandlp.editor-discord-webhooks",
+  "version": "1.0.0",
+  "displayName": "Editor Discord Webhooks",
+  "description": "Send alert in Editor with Discord Webhooks.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.editorcoroutines": "1.0.0"
+  },
+  "author": {
+    "name": "Logan.dlp",
+    "email": "logan.delachapelle@gmail.com",
+    "url": "https://github.com/Logan-dlp"
+  }
+}
