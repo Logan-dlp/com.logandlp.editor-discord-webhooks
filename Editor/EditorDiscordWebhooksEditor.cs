@@ -132,7 +132,7 @@ public class EditorDiscordWebhooksEditor : EditorWindow
     [InitializeOnLoadMethod]
     private static void OnInitialize()
     {
-        FetchConfig();
+        ShowConfig();
     }
 
     private static void FetchConfig()
