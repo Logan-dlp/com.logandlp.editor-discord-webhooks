@@ -8,10 +8,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Unity.EditorCoroutines.Editor;
+using UnityEngine.UIElements;
 
 public class EditorDiscordWebhooksEditor : EditorWindow
 {
     private static EditorDiscordWebhooksConfig _config;
+    
     private static string _note;
 
     public static void SendMessage()
@@ -43,12 +45,13 @@ public class EditorDiscordWebhooksEditor : EditorWindow
 
             if (_note.Length > 0)
             {
+                Debug.Log(_note.ToString());
                 _note = $"\n> **Note :** {_note}.\n";
             }
 
             WWWForm requestContent = new();
             requestContent.AddField("content",
-                $"@here **__{nameForMessage}__** needs a help.{_note}\n*If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+                $"@here **__{nameForMessage}__** needs a help.{_note} \n*If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
             using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
             {
                 yield return request.SendWebRequest();
@@ -84,27 +87,37 @@ public class EditorDiscordWebhooksEditor : EditorWindow
     {
         EditorWindow win = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
 
-        Vector2 size = new(400, 100);
+        Vector2 size = new(400, 150);
         
         win.maxSize = size;
         win.minSize = size;
+        
+        win.Show();
     }
 
     private void OnGUI()
     {
         EditorGUILayout.Space(10);
+
+        EditorGUILayout.LabelField("Note :");
+
+        _note = EditorGUILayout.TextArea(_note, GUILayout.Height(50));
+        
+        EditorGUILayout.Separator();
+        EditorGUILayout.BeginHorizontal();
+        
         if (GUILayout.Button("Show Config"))
         {
             ShowConfig();
         }
         
-        EditorGUILayout.Separator();
-        _note = EditorGUILayout.TextField("Note :", _note);
-        
         if (GUILayout.Button("Send Message"))
         {
             SendMessage();
         }
+        
+        EditorGUILayout.EndHorizontal();
+        
     }
 
     [InitializeOnLoadMethod]
