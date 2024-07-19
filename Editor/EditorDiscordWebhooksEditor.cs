@@ -8,10 +8,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Unity.EditorCoroutines.Editor;
+using UnityEngine.UIElements;
 
 public class EditorDiscordWebhooksEditor : EditorWindow
 {
     private static EditorDiscordWebhooksConfig _config;
+    
     private static string _note;
 
     public static void SendMessage()
@@ -28,27 +30,32 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             ShowConfig();
             return;
         }
+        
+        string nameForMessage;
+        if (_config.Name == null || _config.Name.Length == 0)
+        {
+            nameForMessage = "a member of the team";
+        }
+        else
+        {
+            nameForMessage = _config.Name;
+        }
+
+        if (_note != null && _note.Length > 0)
+        {
+            _note = $"\n>>> **__Note :__**\n```fix\n{_note}\n```";
+        }
+        else
+        {
+            _note = "\n>>> ";
+        }
 
         IEnumerator RequestWebhooksAPI()
         {
-            string nameForMessage;
-            if (_config.Name == null || _config.Name.Length == 0)
-            {
-                nameForMessage = "a member of the team";
-            }
-            else
-            {
-                nameForMessage = _config.Name;
-            }
-
-            if (_note.Length > 0)
-            {
-                _note = $"\n> **Note :** {_note}.\n";
-            }
 
             WWWForm requestContent = new();
             requestContent.AddField("content",
-                $"@here **__{nameForMessage}__** needs a help.{_note}\n*If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+                $"@here **__{nameForMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
             using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
             {
                 yield return request.SendWebRequest();
@@ -82,29 +89,44 @@ public class EditorDiscordWebhooksEditor : EditorWindow
     [MenuItem("Window/Tools/Editor Discord Webhooks", false, int.MaxValue)]
     public static void ShowWindows()
     {
-        EditorWindow win = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
+        EditorWindow window = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
 
-        Vector2 size = new(400, 100);
+        Vector2 size = new(400, 150);
         
-        win.maxSize = size;
-        win.minSize = size;
+        window.maxSize = size;
+        window.minSize = size;
+        
+        window.Show();
     }
 
     private void OnGUI()
     {
         EditorGUILayout.Space(10);
+
+        EditorGUILayout.LabelField("Note :");
+        _note = EditorGUILayout.TextArea(_note, GUILayout.Height(70));
+        
+        EditorGUILayout.Separator();
+        EditorGUILayout.BeginHorizontal();
+
+        Color baseColor = GUI.backgroundColor;
+
+        GUI.backgroundColor = new Color(0.6196078431f, 0.1647058824f, 0.1647058824f, 1);
+        
         if (GUILayout.Button("Show Config"))
         {
             ShowConfig();
         }
         
-        EditorGUILayout.Separator();
-        _note = EditorGUILayout.TextField("Note :", _note);
+        GUI.backgroundColor = baseColor;
         
         if (GUILayout.Button("Send Message"))
         {
             SendMessage();
         }
+        
+        EditorGUILayout.EndHorizontal();
+        
     }
 
     [InitializeOnLoadMethod]
