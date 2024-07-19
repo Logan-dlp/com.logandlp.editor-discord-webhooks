@@ -41,13 +41,13 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             nameForMessage = _config.Name;
         }
 
-        if (_note.Length > 0)
+        if (_note != null && _note.Length > 0)
         {
             _note = $"\n>>> **__Note :__**\n```fix\n{_note}\n```";
         }
         else
         {
-            _note = ">>> ";
+            _note = "\n>>> ";
         }
 
         IEnumerator RequestWebhooksAPI()
@@ -89,14 +89,14 @@ public class EditorDiscordWebhooksEditor : EditorWindow
     [MenuItem("Window/Tools/Editor Discord Webhooks", false, int.MaxValue)]
     public static void ShowWindows()
     {
-        EditorWindow win = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
+        EditorWindow window = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
 
         Vector2 size = new(400, 150);
         
-        win.maxSize = size;
-        win.minSize = size;
+        window.maxSize = size;
+        window.minSize = size;
         
-        win.Show();
+        window.Show();
     }
 
     private void OnGUI()
@@ -104,16 +104,21 @@ public class EditorDiscordWebhooksEditor : EditorWindow
         EditorGUILayout.Space(10);
 
         EditorGUILayout.LabelField("Note :");
-
-        _note = EditorGUILayout.TextArea(_note, GUILayout.Height(50));
+        _note = EditorGUILayout.TextArea(_note, GUILayout.Height(70));
         
         EditorGUILayout.Separator();
         EditorGUILayout.BeginHorizontal();
+
+        Color baseColor = GUI.backgroundColor;
+
+        GUI.backgroundColor = new Color(0.6196078431f, 0.1647058824f, 0.1647058824f, 1);
         
         if (GUILayout.Button("Show Config"))
         {
             ShowConfig();
         }
+        
+        GUI.backgroundColor = baseColor;
         
         if (GUILayout.Button("Send Message"))
         {
