@@ -30,28 +30,32 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             ShowConfig();
             return;
         }
+        
+        string nameForMessage;
+        if (_config.Name == null || _config.Name.Length == 0)
+        {
+            nameForMessage = "a member of the team";
+        }
+        else
+        {
+            nameForMessage = _config.Name;
+        }
+
+        if (_note.Length > 0)
+        {
+            _note = $"\n>>> **__Note :__**\n```fix\n{_note}\n```";
+        }
+        else
+        {
+            _note = ">>> ";
+        }
 
         IEnumerator RequestWebhooksAPI()
         {
-            string nameForMessage;
-            if (_config.Name == null || _config.Name.Length == 0)
-            {
-                nameForMessage = "a member of the team";
-            }
-            else
-            {
-                nameForMessage = _config.Name;
-            }
-
-            if (_note.Length > 0)
-            {
-                Debug.Log(_note.ToString());
-                _note = $"\n> **Note :** {_note}.\n";
-            }
 
             WWWForm requestContent = new();
             requestContent.AddField("content",
-                $"@here **__{nameForMessage}__** needs a help.{_note} \n*If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+                $"@here **__{nameForMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
             using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
             {
                 yield return request.SendWebRequest();
