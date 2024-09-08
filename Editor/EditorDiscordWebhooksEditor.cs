@@ -32,13 +32,13 @@ public class EditorDiscordWebhooksEditor : EditorWindow
         }
         
         string nameForMessage;
-        if (_config.Name == null || _config.Name.Length == 0)
+        if (_config.Username == null || _config.Username.Length == 0)
         {
             nameForMessage = "a member of the team";
         }
         else
         {
-            nameForMessage = _config.Name;
+            nameForMessage = _config.Username;
         }
 
         if (_note != null && _note.Length > 0)
