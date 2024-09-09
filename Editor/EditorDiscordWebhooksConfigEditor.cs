@@ -29,6 +29,9 @@ public class EditorDiscordWebhooksConfigEditor : Editor
         {
             PlayerPrefs.DeleteKey("WebhooksUsername");
             PlayerPrefs.DeleteKey("WebhooksLogging");
+            
+            config.Username = String.Empty;
+            config.Logging = false;
         }
     }
 }
