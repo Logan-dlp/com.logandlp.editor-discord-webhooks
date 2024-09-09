@@ -1,4 +1,4 @@
-// Copyright 2024, Logan, All rights reserved.
+// Copyright 2024, Logan.dlp, All rights reserved.
 
 using UnityEngine;
 

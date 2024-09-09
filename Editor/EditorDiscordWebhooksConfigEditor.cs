@@ -1,4 +1,4 @@
-﻿// Copyright 2024, Logan, All rights reserved.
+﻿// Copyright 2024, Logan.dlp, All rights reserved.
 
 using System;
 using UnityEditor;
@@ -31,6 +31,9 @@ public class EditorDiscordWebhooksConfigEditor : Editor
         
         config.Logging = EditorGUILayout.Toggle("Logging", config.Logging);
 
+        GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
+        
         if (GUILayout.Button("Save"))
         {
             if (config.Username.Length != 0)
@@ -49,5 +52,7 @@ public class EditorDiscordWebhooksConfigEditor : Editor
             config.Username = String.Empty;
             config.Logging = false;
         }
+        
+        GUILayout.EndHorizontal();
     }
 }
