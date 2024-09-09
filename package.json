@@ -4,9 +4,9 @@
   "displayName": "Editor Discord Webhooks",
   "description": "Send alert in Editor with Discord Webhooks.",
   "unity": "2022.3",
-  "documentationUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/blob/V.1.0.0/README.md",
-  "changelogUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/issues",
-  "licensesUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/blob/V.1.0.0/LICENSE",
+  "documentationUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/blob/v1.0.0/README.md",
+  "changelogUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/releases",
+  "licensesUrl": "https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks/blob/v1.0.0/LICENSE",
   "dependencies": {
     "com.unity.editorcoroutines": "1.0.0"
   },
