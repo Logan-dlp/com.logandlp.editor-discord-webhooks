@@ -1,5 +1,6 @@
 ﻿// Copyright 2024, Logan, All rights reserved.
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,12 +12,23 @@ public class EditorDiscordWebhooksConfigEditor : Editor
         EditorDiscordWebhooksConfig config = (EditorDiscordWebhooksConfig)target;
 
         config.Username = EditorGUILayout.TextField("Username", config.Username);
+        config.WebhooksAPI = EditorGUILayout.TextField("Webhooks API", config.WebhooksAPI);
+        config.Logging = EditorGUILayout.Toggle("Logging", config.Logging);
 
-        if (GUI.changed)
+        if (GUILayout.Button("Save"))
         {
-            EditorUtility.SetDirty(config);
+            if (config.Username.Length != 0)
+            {
+                PlayerPrefs.SetString("WebhooksUsername", config.Username);
+            }
+            
+            PlayerPrefs.SetInt("WebhooksLogging", Convert.ToInt32(config.Logging));
         }
-        
-        //base.OnInspectorGUI();
+
+        if (GUILayout.Button("Reset"))
+        {
+            PlayerPrefs.DeleteKey("WebhooksUsername");
+            PlayerPrefs.DeleteKey("WebhooksLogging");
+        }
     }
 }

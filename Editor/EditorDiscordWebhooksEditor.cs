@@ -1,5 +1,6 @@
 // Copyright 2024, Logan, All rights reserved.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,14 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             return;
         }
         
-        string nameForMessage;
-        if (_config.Username == null || _config.Username.Length == 0)
+        string autorMessage;
+        if (!PlayerPrefs.HasKey("WebhooksUsername") || PlayerPrefs.GetString("WebhooksUsername").Length == 0)
         {
-            nameForMessage = "a member of the team";
+            autorMessage = "a member of the team";
         }
         else
         {
-            nameForMessage = _config.Username;
+            autorMessage = PlayerPrefs.GetString("WebhooksUsername");
         }
 
         if (_note != null && _note.Length > 0)
@@ -55,7 +56,7 @@ public class EditorDiscordWebhooksEditor : EditorWindow
 
             WWWForm requestContent = new();
             requestContent.AddField("content",
-                $"@here **__{nameForMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+                $"@here **__{autorMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
             using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
             {
                 yield return request.SendWebRequest();
@@ -65,7 +66,7 @@ public class EditorDiscordWebhooksEditor : EditorWindow
                 }
                 else
                 {
-                    if (_config.Logging)
+                    if (Convert.ToBoolean(PlayerPrefs.GetInt("WebhooksLogging")))
                     {
                         Debug.Log("Your message has been sent.");
                     }

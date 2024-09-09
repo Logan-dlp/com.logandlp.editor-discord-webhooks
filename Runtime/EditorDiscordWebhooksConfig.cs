@@ -11,7 +11,12 @@ public class EditorDiscordWebhooksConfig : ScriptableObject
     }
     private string _username;
 
+    public bool Logging
+    {
+        get { return _logging; }
+        set { _logging = value; }
+    }
+    private bool _logging;
     
     public string WebhooksAPI;
-    public bool Logging = true;
 }
