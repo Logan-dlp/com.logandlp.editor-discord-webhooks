@@ -14,7 +14,8 @@ using UnityEngine.UIElements;
 public class EditorDiscordWebhooksEditor : EditorWindow
 {
     private static EditorDiscordWebhooksConfig _config;
-    
+
+    private static string _mention;
     private static string _note;
 
     public static void SendMessage()
@@ -51,12 +52,21 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             _note = "\n>>> ";
         }
 
+        if (_config.DiscordMention == null || _config.DiscordMention.Length == 0)
+        {
+            _mention = "@everyone";
+        }
+        else
+        {
+            _mention = _config.DiscordMention;
+        }
+
         IEnumerator RequestWebhooksAPI()
         {
 
             WWWForm requestContent = new();
             requestContent.AddField("content",
-                $"@here **__{autorMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+                $"{_mention} **__{autorMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
             using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
             {
                 yield return request.SendWebRequest();
@@ -87,10 +97,10 @@ public class EditorDiscordWebhooksEditor : EditorWindow
         EditorGUIUtility.PingObject(AssetDatabase.LoadAssetAtPath<EditorDiscordWebhooksConfig>(path).GetInstanceID());
     }
 
-    [MenuItem("Window/Tools/Editor Discord Webhooks", false, int.MaxValue)]
+    [MenuItem("Tools/Discord Webhooks Tools", false, int.MaxValue)]
     public static void ShowWindows()
     {
-        EditorWindow window = GetWindow<EditorDiscordWebhooksEditor>("Editor Discord Webhooks");
+        EditorWindow window = GetWindow<EditorDiscordWebhooksEditor>("Discord Webhooks Tools");
 
         Vector2 size = new(400, 150);
         

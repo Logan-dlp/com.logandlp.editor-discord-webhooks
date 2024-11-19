@@ -1,5 +1,7 @@
 // Copyright 2024, Logan.dlp, All rights reserved.
 
+using System;
+using UnityEditor;
 using UnityEngine;
 
 public class EditorDiscordWebhooksConfig : ScriptableObject
@@ -19,4 +21,5 @@ public class EditorDiscordWebhooksConfig : ScriptableObject
     private bool _logging;
     
     public string WebhooksAPI;
+    public string DiscordMention;
 }
