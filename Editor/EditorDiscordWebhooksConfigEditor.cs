@@ -9,20 +9,24 @@ public class EditorDiscordWebhooksConfigEditor : Editor
 {
     private SerializedObject _serializedObjectTarget;
     private SerializedProperty _webhooksAPIProperty;
+    private SerializedProperty _discordMentionProperty;
 
     private void OnEnable()
     {
         _serializedObjectTarget = new(target);
         _webhooksAPIProperty = _serializedObjectTarget.FindProperty("WebhooksAPI");
+        _discordMentionProperty = _serializedObjectTarget.FindProperty("DiscordMention");
     }
 
     public override void OnInspectorGUI()
     {
         EditorDiscordWebhooksConfig config = (EditorDiscordWebhooksConfig)target;
+        
         config.Username = EditorGUILayout.TextField("Username", config.Username);
 
         _serializedObjectTarget.Update();
         EditorGUILayout.PropertyField(_webhooksAPIProperty, new GUIContent("Webhooks API"));
+        EditorGUILayout.PropertyField(_discordMentionProperty, new GUIContent("Discord Mention"));
 
         if (_serializedObjectTarget.ApplyModifiedProperties())
         {
@@ -41,7 +45,7 @@ public class EditorDiscordWebhooksConfigEditor : Editor
                 PlayerPrefs.SetString("WebhooksUsername", config.Username);
             }
             
-            PlayerPrefs.SetInt("WebhooksLogging", Convert.ToInt32(config.Logging));
+            PlayerPrefs.SetInt("WebhooksLogging", Convert.ToInt16(config.Logging));
         }
 
         if (GUILayout.Button("Reset"))
