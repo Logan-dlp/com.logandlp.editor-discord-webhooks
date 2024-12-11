@@ -1,5 +1,7 @@
 ﻿// Copyright 2024, Logan.dlp, All rights reserved.
 
+#if UNITY_EDITOR
+
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -56,3 +58,5 @@ public class EditorDiscordWebhooksConfigEditor : Editor
         GUILayout.EndHorizontal();
     }
 }
+
+#endif

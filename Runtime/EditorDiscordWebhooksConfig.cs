@@ -1,22 +1,14 @@
 // Copyright 2024, Logan.dlp, All rights reserved.
 
+#if UNITY_EDITOR
+
 using UnityEngine;
 
 public class EditorDiscordWebhooksConfig : ScriptableObject
 {
-    public string Username
-    {
-        get { return _username; }
-        set { _username = value; }
-    }
-    private string _username;
-
-    public bool Logging
-    {
-        get { return _logging; }
-        set { _logging = value; }
-    }
-    private bool _logging;
-    
+    public string Username { get; set; }
+    public bool Logging { get; set; }
     public string WebhooksAPI;
 }
+
+#endif
