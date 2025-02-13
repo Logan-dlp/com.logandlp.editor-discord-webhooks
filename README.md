@@ -17,7 +17,7 @@ https://github.com/Logan-dlp/com.logandlp.editor-discord-webhooks.git
   * Show Config `tells you where your configuration is`
   * Send message `send your message on discord`
 * Open the Configuration
-  * Weebhooks URL `(same for all team) ~ variable serializer`
+  * Weebhooks URL `(same for all team)`
   * Add username, active logging `for log in the console`
   * Reset `is to remove the username and logging variables present in the playerprefs`
   * Save `save variables in playerprefs`
