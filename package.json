@@ -1,6 +1,6 @@
 {
   "name": "com.logandlp.editor-discord-webhooks",
-  "version": "1.0.4",
+  "version": "1.1.33",
   "displayName": "Discord Webhooks",
   "description": "Send alert in Editor with Discord Webhooks.",
   "unity": "2022.3",
