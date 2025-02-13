@@ -1,4 +1,4 @@
-// Copyright 2024, Logan.dlp, All rights reserved.
+// Copyright 2025, Logan.dlp, All rights reserved.
 
 #if UNITY_EDITOR
 
@@ -8,7 +8,7 @@ public class EditorDiscordWebhooksConfig : ScriptableObject
 {
     public string Username { get; set; }
     public bool Logging { get; set; }
-    public string WebhooksAPI;
+    public string WebhooksAPI { get; set; }
 }
 
 #endif
