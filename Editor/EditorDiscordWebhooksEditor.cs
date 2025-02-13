@@ -1,4 +1,4 @@
-// Copyright 2024, Logan.dlp, All rights reserved.
+// Copyright 2025, Logan.dlp, All rights reserved.
 
 #if UNITY_EDITOR
 
@@ -11,7 +11,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Unity.EditorCoroutines.Editor;
-using UnityEngine.UIElements;
 
 public class EditorDiscordWebhooksEditor : EditorWindow
 {
@@ -105,7 +104,7 @@ public class EditorDiscordWebhooksEditor : EditorWindow
             ShowConfig();
         }
 
-        if (_config.WebhooksAPI == null || _config.WebhooksAPI.Length == 0)
+        if (!PlayerPrefs.HasKey("WebhooksAPI"))
         {
             Debug.LogError("Please insert the Webhooks of your Discord server.");
             ShowConfig();
@@ -133,11 +132,9 @@ public class EditorDiscordWebhooksEditor : EditorWindow
 
         IEnumerator RequestWebhooksAPI()
         {
-
             WWWForm requestContent = new();
-            requestContent.AddField("content",
-                $"@here **__{autorMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
-            using (UnityWebRequest request = UnityWebRequest.Post(_config.WebhooksAPI, requestContent))
+            requestContent.AddField("content", $"@here **__{autorMessage}__** needs a help.{_note}\n-# *If you take care of it please put the reaction :white_check_mark: and delete the message after the request is made.*");
+            using (UnityWebRequest request = UnityWebRequest.Post(PlayerPrefs.GetString("WebhooksAPI"), requestContent))
             {
                 yield return request.SendWebRequest();
                 if (request.result != UnityWebRequest.Result.Success)

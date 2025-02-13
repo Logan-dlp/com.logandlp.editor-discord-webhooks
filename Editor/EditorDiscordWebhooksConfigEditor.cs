@@ -1,4 +1,4 @@
-﻿// Copyright 2024, Logan.dlp, All rights reserved.
+﻿// Copyright 2025, Logan.dlp, All rights reserved.
 
 #if UNITY_EDITOR
 
@@ -10,21 +10,20 @@ using UnityEngine;
 public class EditorDiscordWebhooksConfigEditor : Editor
 {
     private SerializedObject _serializedObjectTarget;
-    private SerializedProperty _webhooksAPIProperty;
 
     private void OnEnable()
     {
         _serializedObjectTarget = new(target);
-        _webhooksAPIProperty = _serializedObjectTarget.FindProperty("WebhooksAPI");
     }
 
     public override void OnInspectorGUI()
     {
+        _serializedObjectTarget.Update();
+        
         EditorDiscordWebhooksConfig config = (EditorDiscordWebhooksConfig)target;
         config.Username = EditorGUILayout.TextField("Username", config.Username);
 
-        _serializedObjectTarget.Update();
-        EditorGUILayout.PropertyField(_webhooksAPIProperty, new GUIContent("Webhooks API"));
+        config.WebhooksAPI = EditorGUILayout.TextField("Webhooks API", config.WebhooksAPI);
 
         if (_serializedObjectTarget.ApplyModifiedProperties())
         {
@@ -44,15 +43,32 @@ public class EditorDiscordWebhooksConfigEditor : Editor
             }
             
             PlayerPrefs.SetInt("WebhooksLogging", Convert.ToInt32(config.Logging));
+
+            if (config.WebhooksAPI.Length != 0)
+            {
+                PlayerPrefs.SetString("WebhooksAPI", config.WebhooksAPI);
+            }
+
+            if (config.Logging)
+            {
+                Debug.Log("Your parameter as been saved.");
+            }
         }
 
         if (GUILayout.Button("Reset"))
         {
+            if (PlayerPrefs.HasKey("WebhooksLogging") && PlayerPrefs.GetInt("WebhooksLogging") == 1)
+            {
+                Debug.Log("Your parameter as been reset.");
+            }
+            
             PlayerPrefs.DeleteKey("WebhooksUsername");
             PlayerPrefs.DeleteKey("WebhooksLogging");
+            PlayerPrefs.DeleteKey("WebhooksAPI");
             
             config.Username = String.Empty;
             config.Logging = false;
+            config.WebhooksAPI = String.Empty;
         }
         
         GUILayout.EndHorizontal();
